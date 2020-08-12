@@ -7,7 +7,9 @@ class Moti extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lightTheme = ThemeData.light();
-    final darkTheme = ThemeData.dark();
+    final darkTheme = ThemeData.dark().copyWith(
+      scaffoldBackgroundColor: Colors.black,
+    );
 
     return MaterialApp(
       title: 'Motivation',
