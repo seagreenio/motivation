@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:motivation/flash.dart';
 
 class MotiHome extends StatefulWidget {
   @override
@@ -15,11 +16,9 @@ class _MotiHomeState extends State<MotiHome> {
       body: SafeArea(
         child: Stack(
           children: [
-            Center(
+            Align(
+              alignment: Alignment(0, -0.1),
               child: Container(
-                margin: EdgeInsets.only(
-                  bottom: 72,
-                ),
                 child: Text(
                   'Motivation'.toUpperCase(),
                   style: Theme.of(context)
@@ -30,11 +29,20 @@ class _MotiHomeState extends State<MotiHome> {
               ),
             ),
             Align(
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment(0, 0.1),
               child: Container(
-                margin: EdgeInsets.only(
-                  bottom: 24,
+                child: MotiFlash(
+                  child: Text(
+                    'Tap screen to start'.toUpperCase(),
+                    style: Theme.of(context).textTheme.overline,
+                  ),
+                  duration: const Duration(seconds: 3),
                 ),
+              ),
+            ),
+            Align(
+              alignment: Alignment(0, 0.9),
+              child: Container(
                 child: Text(
                   'Optimize Your Time'.toUpperCase(),
                   style: Theme.of(context).textTheme.overline,
