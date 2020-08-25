@@ -8,17 +8,36 @@ class MotiHome extends StatefulWidget {
 }
 
 class _MotiHomeState extends State<MotiHome> {
+  bool _started = false;
+
+  getStarted() {
+    HapticFeedback.vibrate();
+
+    setState(() {
+      _started = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     updateStatusBarByCurrentTheme(context);
 
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment(0, -0.1),
-              child: Container(
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: getStarted,
+          child: Stack(
+            children: [
+              AnimatedContainer(
+                duration: const Duration(
+                  milliseconds: 600,
+                ),
+                alignment: _started
+                    ? MediaQuery.of(context).orientation == Orientation.portrait
+                        ? Alignment(0, -0.45)
+                        : Alignment(0, -0.75)
+                    : Alignment(0, -0.15),
                 child: Text(
                   'Motivation'.toUpperCase(),
                   style: Theme.of(context)
@@ -27,29 +46,25 @@ class _MotiHomeState extends State<MotiHome> {
                       .copyWith(letterSpacing: 4.5),
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment(0, 0.1),
-              child: Container(
-                child: MotiFlash(
-                  child: Text(
-                    'Tap screen to start'.toUpperCase(),
-                    style: Theme.of(context).textTheme.overline,
+              if (!_started)
+                Center(
+                  child: MotiFlash(
+                    child: Text(
+                      'Tap screen to start'.toUpperCase(),
+                      style: Theme.of(context).textTheme.overline,
+                    ),
+                    duration: const Duration(seconds: 3),
                   ),
-                  duration: const Duration(seconds: 3),
                 ),
-              ),
-            ),
-            Align(
-              alignment: Alignment(0, 0.9),
-              child: Container(
+              Align(
+                alignment: Alignment(0, 0.9),
                 child: Text(
                   'Optimize Your Time'.toUpperCase(),
                   style: Theme.of(context).textTheme.overline,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
