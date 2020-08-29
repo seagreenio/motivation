@@ -21,15 +21,11 @@ class _MotiFlashState extends State<MotiFlash>
     _controller = AnimationController(
       vsync: this,
       duration: widget.duration,
-    );
+    )..repeat(reverse: true);
   }
 
   @override
   Widget build(BuildContext context) {
-    _controller.repeat(
-      reverse: true,
-    );
-
     return FadeTransition(
       opacity: _controller,
       child: widget.child,

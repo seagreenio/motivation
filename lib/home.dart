@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivation/flash.dart';
+import 'package:motivation/guides/step1.dart';
+import 'package:motivation/guides/step2.dart';
 
 class MotiHome extends StatefulWidget {
   @override
@@ -8,13 +9,42 @@ class MotiHome extends StatefulWidget {
 }
 
 class _MotiHomeState extends State<MotiHome> {
-  bool _started = false;
+  int _step = 1;
+  Widget _stepWidget = MotiGuidesStep1();
 
-  getStarted() {
+  go() {
     HapticFeedback.vibrate();
 
+    switch (_step) {
+      case 1:
+        setState(() {
+          _stepWidget = MotiGuidesStep2();
+        });
+        break;
+      default:
+        return;
+    }
+
     setState(() {
-      _started = true;
+      _step += 1;
+    });
+  }
+
+  back() {
+    HapticFeedback.vibrate();
+
+    switch (_step) {
+      case 2:
+        setState(() {
+          _stepWidget = MotiGuidesStep1();
+        });
+        break;
+      default:
+        return;
+    }
+
+    setState(() {
+      _step -= 1;
     });
   }
 
@@ -25,47 +55,43 @@ class _MotiHomeState extends State<MotiHome> {
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: getStarted,
-          child: Stack(
-            children: [
-              AnimatedContainer(
-                duration: const Duration(
-                  milliseconds: 600,
+            behavior: HitTestBehavior.translucent,
+            onTap: go,
+            child: Stack(
+              children: [
+                AnimatedSwitcher(
+                  child: _stepWidget,
+                  switchInCurve: Curves.easeInOut,
+                  switchOutCurve: Curves.easeInOut,
+                  duration: const Duration(milliseconds: 500),
                 ),
-                alignment: _started
-                    ? MediaQuery.of(context).orientation == Orientation.portrait
-                        ? Alignment(0, -0.45)
-                        : Alignment(0, -0.75)
-                    : Alignment(0, -0.15),
-                child: Text(
-                  'Motivation'.toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5
-                      .copyWith(letterSpacing: 4.5),
+                Align(
+                  alignment: Alignment(0, 0.9),
+                  child: _step == 1
+                      ? Text(
+                          'Optimize Your Time'.toUpperCase(),
+                          style: Theme.of(context).textTheme.overline,
+                        )
+                      : Ink(
+                          decoration: ShapeDecoration(
+                              shape: CircleBorder(),
+                              color:
+                                  MediaQuery.of(context).platformBrightness ==
+                                          Brightness.light
+                                      ? Colors.black
+                                      : Colors.white),
+                          child: IconButton(
+                            icon: Icon(Icons.chevron_left),
+                            color: MediaQuery.of(context).platformBrightness ==
+                                    Brightness.light
+                                ? Colors.white
+                                : Colors.black,
+                            onPressed: back,
+                          ),
+                        ),
                 ),
-              ),
-              if (!_started)
-                Center(
-                  child: MotiFlash(
-                    child: Text(
-                      'Tap screen to start'.toUpperCase(),
-                      style: Theme.of(context).textTheme.overline,
-                    ),
-                    duration: const Duration(seconds: 3),
-                  ),
-                ),
-              Align(
-                alignment: Alignment(0, 0.9),
-                child: Text(
-                  'Optimize Your Time'.toUpperCase(),
-                  style: Theme.of(context).textTheme.overline,
-                ),
-              ),
-            ],
-          ),
-        ),
+              ],
+            )),
       ),
     );
   }
