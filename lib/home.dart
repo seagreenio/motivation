@@ -72,22 +72,12 @@ class _MotiHomeState extends State<MotiHome> {
                           'Optimize Your Time'.toUpperCase(),
                           style: Theme.of(context).textTheme.overline,
                         )
-                      : Ink(
-                          decoration: ShapeDecoration(
-                              shape: CircleBorder(),
-                              color:
-                                  MediaQuery.of(context).platformBrightness ==
-                                          Brightness.light
-                                      ? Colors.black
-                                      : Colors.white),
-                          child: IconButton(
-                            icon: Icon(Icons.chevron_left),
-                            color: MediaQuery.of(context).platformBrightness ==
-                                    Brightness.light
-                                ? Colors.white
-                                : Colors.black,
-                            onPressed: back,
+                      : FlatButton(
+                          child: Text(
+                            'Back'.toUpperCase(),
+                            style: Theme.of(context).textTheme.overline,
                           ),
+                          onPressed: back,
                         ),
                 ),
               ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:motivation/time_wheel.dart';
+import 'package:day/day.dart';
 
 class MotiGuidesStep2 extends StatefulWidget {
   @override
@@ -48,15 +50,21 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
             child: FractionallySizedBox(
               widthFactor: 0.75,
               child: Text(
-                'Now choose the year of your brith'.toUpperCase(),
+                'Choose the year of your brith'.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline5
+                    .headline6
                     .copyWith(letterSpacing: 1.5),
               ),
             ),
           ),
+          Center(
+            child: MotiTimeWheel(
+              range: List.generate(
+                  Day().year() - 1900 + 1, (index) => index + 1900),
+            ),
+          )
         ],
       ),
     );
