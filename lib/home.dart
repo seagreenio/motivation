@@ -12,7 +12,7 @@ class MotiHome extends StatefulWidget {
 class _MotiHomeState extends State<MotiHome> {
   int _step = 0;
   Widget _stepWidget = MotiGuidesStep1();
-  Day _birth = Day();
+  Day _birth = Day.fromString('2000-01-01');
 
   _go() {
     HapticFeedback.vibrate();
@@ -23,6 +23,7 @@ class _MotiHomeState extends State<MotiHome> {
           _stepWidget = MotiGuidesStep2(
             go: _go,
             back: _back,
+            birth: _birth,
             setBirth: _setBirth,
           );
         });
@@ -48,6 +49,7 @@ class _MotiHomeState extends State<MotiHome> {
           _stepWidget = MotiGuidesStep2(
             go: _go,
             back: _back,
+            birth: _birth,
             setBirth: _setBirth,
           );
         });
@@ -60,11 +62,11 @@ class _MotiHomeState extends State<MotiHome> {
   }
 
   _setBirth(String unit, int val) {
-    setState(() {
-      _birth
+    setState(
+      () => _birth
         ..set(unit, val)
-        ..finished();
-    });
+        ..finished(),
+    );
   }
 
   @override
@@ -74,18 +76,19 @@ class _MotiHomeState extends State<MotiHome> {
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: _step == 0 ? _go : null,
-            child: Stack(
-              children: [
-                AnimatedSwitcher(
-                  child: _stepWidget,
-                  switchInCurve: Curves.easeInOut,
-                  switchOutCurve: Curves.easeInOut,
-                  duration: const Duration(milliseconds: 500),
-                ),
-              ],
-            )),
+          behavior: HitTestBehavior.translucent,
+          onTap: _step == 0 ? _go : null,
+          child: Stack(
+            children: [
+              AnimatedSwitcher(
+                child: _stepWidget,
+                switchInCurve: Curves.easeInOut,
+                switchOutCurve: Curves.easeInOut,
+                duration: const Duration(milliseconds: 500),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

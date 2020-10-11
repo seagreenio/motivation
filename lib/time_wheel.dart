@@ -21,18 +21,32 @@ class MotiTimeWheel extends StatefulWidget {
 class _MotiTimeState extends State<MotiTimeWheel> {
   int _selectedIndex;
 
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      if (widget.controller != null &&
+          widget.controller is FixedExtentScrollController) {
+        _selectedIndex =
+            (widget.controller as FixedExtentScrollController).initialItem;
+      }
+    });
+  }
+
   _onSelectedItemChanged(i) {
     HapticFeedback.vibrate();
 
     setState(() => _selectedIndex = i);
-
     widget.onSelectedItemChangedCallback(widget.range, i);
   }
 
   @override
   Widget build(BuildContext context) {
-    final _style =
-        Theme.of(context).textTheme.headline5.copyWith(letterSpacing: 1.5);
+    final _style = Theme.of(context)
+        .textTheme
+        .headline5
+        .copyWith(letterSpacing: 1.5); //fontSize: 24
     final _selectedStyle = Theme.of(context).textTheme.headline5.copyWith(
           fontSize: 28,
           fontWeight: FontWeight.bold,

@@ -7,10 +7,12 @@ typedef void GoBackFn();
 class MotiGuidesStep2 extends StatefulWidget {
   final GoBackFn go;
   final GoBackFn back;
+  final Day birth;
   final setBirth;
 
   MotiGuidesStep2({
     @required this.go,
+    @required this.birth,
     @required this.back,
     @required this.setBirth,
   });
@@ -70,7 +72,7 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
           ),
           Center(
             child: Container(
-              height: 24 * 3 * 3.0,
+              height: 24.0 * 3 * 3,
               child: FractionallySizedBox(
                 widthFactor:
                     MediaQuery.of(context).orientation == Orientation.portrait
@@ -82,7 +84,7 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
                     Expanded(
                       child: MotiTimeWheel(
                         controller: FixedExtentScrollController(
-                          initialItem: 100,
+                          initialItem: widget.birth.year() - 1900,
                         ),
                         range: List.generate(
                             Day().year() - 1900 + 1, (index) => index + 1900),
@@ -92,6 +94,9 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
                     ),
                     Expanded(
                       child: MotiTimeWheel(
+                        controller: FixedExtentScrollController(
+                          initialItem: widget.birth.month() - 1,
+                        ),
                         range: List.generate(12, (index) => index + 1),
                         onSelectedItemChangedCallback: (range, i) =>
                             widget.setBirth('M', range[i]),
@@ -99,6 +104,9 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
                     ),
                     Expanded(
                       child: MotiTimeWheel(
+                        controller: FixedExtentScrollController(
+                          initialItem: widget.birth.date() - 1,
+                        ),
                         range: List.generate(31, (index) => index + 1),
                         onSelectedItemChangedCallback: (range, i) =>
                             widget.setBirth('d', range[i]),

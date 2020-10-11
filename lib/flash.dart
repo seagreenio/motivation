@@ -4,7 +4,10 @@ class MotiFlash extends StatefulWidget {
   final Widget child;
   final Duration duration;
 
-  MotiFlash({@required this.child, @required this.duration});
+  MotiFlash({
+    @required this.child,
+    @required this.duration,
+  });
 
   @override
   createState() => _MotiFlashState();
@@ -25,17 +28,17 @@ class _MotiFlashState extends State<MotiFlash>
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FadeTransition(
       opacity: _controller,
       child: widget.child,
     );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-
-    super.dispose();
   }
 }
