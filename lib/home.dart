@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:day/day.dart';
 import 'package:motivation/guides/step1.dart';
-import 'package:motivation/guides/step2.dart';
+import 'package:motivation/guides/step2_choose_birth.dart';
 
 class MotiHome extends StatefulWidget {
   @override
@@ -9,42 +10,60 @@ class MotiHome extends StatefulWidget {
 }
 
 class _MotiHomeState extends State<MotiHome> {
-  int _step = 1;
+  int _step = 0;
   Widget _stepWidget = MotiGuidesStep1();
+  Day _birth = Day();
 
-  go() {
+  _go() {
+    HapticFeedback.vibrate();
+
+    switch (_step) {
+      case 0:
+        setState(() {
+          _stepWidget = MotiGuidesStep2(
+            go: _go,
+            back: _back,
+            setBirth: _setBirth,
+          );
+        });
+        break;
+      default:
+        return;
+    }
+
+    setState(() => _step += 1);
+  }
+
+  _back() {
     HapticFeedback.vibrate();
 
     switch (_step) {
       case 1:
         setState(() {
-          _stepWidget = MotiGuidesStep2();
-        });
-        break;
-      default:
-        return;
-    }
-
-    setState(() {
-      _step += 1;
-    });
-  }
-
-  back() {
-    HapticFeedback.vibrate();
-
-    switch (_step) {
-      case 2:
-        setState(() {
           _stepWidget = MotiGuidesStep1();
         });
         break;
+      case 2:
+        setState(() {
+          _stepWidget = MotiGuidesStep2(
+            go: _go,
+            back: _back,
+            setBirth: _setBirth,
+          );
+        });
+        break;
       default:
         return;
     }
 
+    setState(() => _step -= 1);
+  }
+
+  _setBirth(String unit, int val) {
     setState(() {
-      _step -= 1;
+      _birth
+        ..set(unit, val)
+        ..finished();
     });
   }
 
@@ -56,7 +75,7 @@ class _MotiHomeState extends State<MotiHome> {
       body: SafeArea(
         child: GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTap: go,
+            onTap: _step == 0 ? _go : null,
             child: Stack(
               children: [
                 AnimatedSwitcher(
@@ -64,21 +83,6 @@ class _MotiHomeState extends State<MotiHome> {
                   switchInCurve: Curves.easeInOut,
                   switchOutCurve: Curves.easeInOut,
                   duration: const Duration(milliseconds: 500),
-                ),
-                Align(
-                  alignment: Alignment(0, 0.9),
-                  child: _step == 1
-                      ? Text(
-                          'Optimize Your Time'.toUpperCase(),
-                          style: Theme.of(context).textTheme.overline,
-                        )
-                      : FlatButton(
-                          child: Text(
-                            'Back'.toUpperCase(),
-                            style: Theme.of(context).textTheme.overline,
-                          ),
-                          onPressed: back,
-                        ),
                 ),
               ],
             )),

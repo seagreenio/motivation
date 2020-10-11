@@ -24,8 +24,14 @@ class MotiGuidesStep1 extends StatelessWidget {
             ),
             duration: const Duration(
               seconds: 1,
-              milliseconds: 500,
             ),
+          ),
+        ),
+        Align(
+          alignment: Alignment(0, 0.75),
+          child: Text(
+            'Optimize Your Time'.toUpperCase(),
+            style: Theme.of(context).textTheme.overline,
           ),
         ),
       ],
