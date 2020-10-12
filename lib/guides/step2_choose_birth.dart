@@ -132,7 +132,7 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
           Align(
             alignment:
                 MediaQuery.of(context).orientation == Orientation.portrait
-                    ? Alignment(0, 0.6)
+                    ? Alignment(0, 0.75)
                     : Alignment(0.9, -0.9),
             child: IconButton(
               icon: Icon(Icons.check),

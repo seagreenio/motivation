@@ -69,24 +69,29 @@ class _MotiHomeState extends State<MotiHome> {
     );
   }
 
+  Future<bool> _onWillPopBack() => Future.sync(() => _back());
+
   @override
   Widget build(BuildContext context) {
     updateStatusBarByCurrentTheme(context);
 
-    return Scaffold(
-      body: SafeArea(
-        child: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: _step == 0 ? _go : null,
-          child: Stack(
-            children: [
-              AnimatedSwitcher(
-                child: _stepWidget,
-                switchInCurve: Curves.easeInOut,
-                switchOutCurve: Curves.easeInOut,
-                duration: const Duration(milliseconds: 500),
-              ),
-            ],
+    return WillPopScope(
+      onWillPop: _step > 0 ? _onWillPopBack : null,
+      child: Scaffold(
+        body: SafeArea(
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: _step == 0 ? _go : null,
+            child: Stack(
+              children: [
+                AnimatedSwitcher(
+                  child: _stepWidget,
+                  switchInCurve: Curves.easeInOut,
+                  switchOutCurve: Curves.easeInOut,
+                  duration: const Duration(milliseconds: 500),
+                ),
+              ],
+            ),
           ),
         ),
       ),
