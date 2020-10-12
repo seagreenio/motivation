@@ -60,7 +60,7 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
             alignment:
                 MediaQuery.of(context).orientation == Orientation.portrait
                     ? Alignment(0, -0.45)
-                    : Alignment(0, -0.9),
+                    : Alignment(0, -0.75),
             child: Text(
               'Choose your brith'.toUpperCase(),
               textAlign: TextAlign.center,
@@ -70,7 +70,11 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
                   .copyWith(letterSpacing: 1.5),
             ),
           ),
-          Center(
+          Align(
+            alignment:
+                MediaQuery.of(context).orientation == Orientation.portrait
+                    ? Alignment(0, 0)
+                    : Alignment(0, 0.45),
             child: Container(
               height: 24.0 * 3 * 3,
               child: FractionallySizedBox(
@@ -118,26 +122,22 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
             ),
           ),
           Align(
+            alignment: Alignment(-0.9, -0.9),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back),
+              iconSize: 34,
+              onPressed: widget.back,
+            ),
+          ),
+          Align(
             alignment:
                 MediaQuery.of(context).orientation == Orientation.portrait
-                    ? Alignment(0, 0.45)
-                    : Alignment(0, 0.9),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: widget.back,
-                ),
-                Text(
-                  ' ' * 12,
-                  style: Theme.of(context).textTheme.button,
-                ),
-                IconButton(
-                  icon: Icon(Icons.check),
-                  onPressed: widget.go,
-                ),
-              ],
+                    ? Alignment(0, 0.6)
+                    : Alignment(0.9, -0.9),
+            child: IconButton(
+              icon: Icon(Icons.check),
+              iconSize: 34,
+              onPressed: widget.go,
             ),
           ),
         ],

@@ -43,18 +43,23 @@ class _MotiTimeState extends State<MotiTimeWheel> {
 
   @override
   Widget build(BuildContext context) {
-    final _style = Theme.of(context)
-        .textTheme
-        .headline5
-        .copyWith(letterSpacing: 1.5); //fontSize: 24
     final _selectedStyle = Theme.of(context).textTheme.headline5.copyWith(
           fontSize: 28,
           fontWeight: FontWeight.bold,
           letterSpacing: 1.5,
         );
+    final _style1 = Theme.of(context)
+        .textTheme
+        .headline5
+        .copyWith(color: Colors.black45, letterSpacing: 1.5);
+    final _style2 = Theme.of(context)
+        .textTheme
+        .headline5
+        .copyWith(color: Colors.black26, letterSpacing: 1.5);
 
     return ListWheelScrollView.useDelegate(
       controller: widget.controller,
+      physics: FixedExtentScrollPhysics(),
       childDelegate: ListWheelChildLoopingListDelegate(
         children: List<Widget>.generate(
           widget.range.length,
@@ -62,13 +67,17 @@ class _MotiTimeState extends State<MotiTimeWheel> {
             child: Text(
               widget.range[index].toString(),
             ),
-            style: index == _selectedIndex ? _selectedStyle : _style,
+            style: index == _selectedIndex
+                ? _selectedStyle
+                : (index == _selectedIndex + 1 || index == _selectedIndex - 1)
+                    ? _style1
+                    : _style2,
             curve: Curves.easeInOut,
             duration: const Duration(milliseconds: 250),
           ),
         ),
       ),
-      itemExtent: _style.fontSize * 3,
+      itemExtent: _style1.fontSize * 3,
       onSelectedItemChanged: _onSelectedItemChanged,
     );
   }
