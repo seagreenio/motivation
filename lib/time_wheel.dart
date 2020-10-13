@@ -45,7 +45,7 @@ class _MotiTimeState extends State<MotiTimeWheel> {
   Widget build(BuildContext context) {
     final _selectedStyle = Theme.of(context).textTheme.headline5.copyWith(
           fontSize: 28,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w600,
           letterSpacing: 1.5,
         );
     final _style1 = Theme.of(context)

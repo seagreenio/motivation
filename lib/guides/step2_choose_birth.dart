@@ -125,7 +125,7 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
             alignment: Alignment(-0.9, -0.9),
             child: IconButton(
               icon: Icon(Icons.arrow_back),
-              iconSize: 34,
+              iconSize: 28,
               onPressed: widget.back,
             ),
           ),
@@ -136,7 +136,7 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
                     : Alignment(0.9, -0.9),
             child: IconButton(
               icon: Icon(Icons.check),
-              iconSize: 34,
+              iconSize: 28,
               onPressed: widget.go,
             ),
           ),
