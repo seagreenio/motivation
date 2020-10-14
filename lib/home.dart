@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:day/day.dart';
 import 'package:motivation/guides/step1.dart';
 import 'package:motivation/guides/step2_choose_birth.dart';
+import 'package:motivation/guides/step3_preparing.dart';
 
 class MotiHome extends StatefulWidget {
   @override
@@ -26,6 +27,11 @@ class _MotiHomeState extends State<MotiHome> {
             birth: _birth,
             setBirth: _setBirth,
           );
+        });
+        break;
+      case 1:
+        setState(() {
+          _stepWidget = MotiGuidesStep3Preparing();
         });
         break;
       default:

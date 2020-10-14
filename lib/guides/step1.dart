@@ -20,7 +20,7 @@ class MotiGuidesStep1 extends StatelessWidget {
           child: MotiFlash(
             child: Text(
               'Tap screen to start'.toUpperCase(),
-              style: Theme.of(context).textTheme.overline,
+              style: Theme.of(context).textTheme.button,
             ),
             duration: const Duration(
               seconds: 1,

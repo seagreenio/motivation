@@ -73,7 +73,7 @@ class _MotiGuidesStep2State extends State<MotiGuidesStep2>
           Align(
             alignment:
                 MediaQuery.of(context).orientation == Orientation.portrait
-                    ? Alignment(0, 0)
+                    ? Alignment(0, 0.15)
                     : Alignment(0, 0.45),
             child: Container(
               height: 24.0 * 3 * 3,
